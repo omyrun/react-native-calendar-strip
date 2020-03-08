@@ -140,14 +140,16 @@ class CalendarDay extends Component {
         .filter(d => (d && d.color))
         .map((dot, index) => {
         return (
-          <View
-            key={dot.key ? dot.key : index}
-            style={[
-              baseDotStyle,
-              { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color },
-              markedDatesStyle
-            ]}
-          />
+          <View style={{ width: 12, height: 12, backgroundColor: '#393B47', borderRadius: 6, position: 'absolute', bottom: -12, left: 10, justifyContent: 'center', alignItems: 'center' }}>
+            <View
+              key={dot.key ? dot.key : index}
+              style={[
+                baseDotStyle,
+                { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color },
+                markedDatesStyle,
+              ]}
+            />
+          </View>
         );
       });
     }
@@ -240,10 +242,10 @@ class CalendarDay extends Component {
         >
           {this.props.showDayName && (
             <Text
-              style={[{ fontSize: this.state.dateNameFontSize }, dateNameStyle]}
+              style={[{ fontSize: 14 }, dateNameStyle]}
               allowFontScaling={this.props.allowDayTextScaling}
             >
-              {this.props.date.format("ddd").toUpperCase()}
+              {this.props.date.format("dd").slice(0,1).toUpperCase()}
             </Text>
           )}
           {this.props.showDayNumber && (
