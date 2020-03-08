@@ -352,7 +352,7 @@ class CalendarStrip extends Component {
     let datesSelectedForWeek = [];
     let datesCustomStylesForWeek = [];
 
-    const substractedDate = me.setLocale(moment(startingDate).subtract(30, 'days'))
+    const substractedDate = me.setLocale(moment(startingDate).subtract(28, 'days'))
 
     for (let i = 0; i < props.countItems; i++) {
 
@@ -662,7 +662,7 @@ class CalendarStrip extends Component {
                         daySelectionAnimation={this.props.daySelectionAnimation}
                         customStyle={this.state.datesCustomStylesForWeek[index]}
                         size={this.state.dayComponentWidth}
-                        allowDayTextScaling={this.props.shouldAllowFontScaling}
+                        allowDayTextScaling={false}
                         markedDates={this.props.markedDates}
                       />
                     </View>
