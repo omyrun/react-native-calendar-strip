@@ -36,9 +36,9 @@ export default StyleSheet.create({
 
   //CALENDAR DAY
   dateContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center"
+    // justifyContent: "center",
+    // alignItems: "center",
+    // alignSelf: "center"
   },
   dateName: {
     textAlign: "center"
@@ -48,7 +48,7 @@ export default StyleSheet.create({
     textAlign: "center"
   },
   dateNumber: {
-    fontWeight: "bold",
+    fontWeight: "400",
     textAlign: "center"
   },
   weekendDateNumber: {
@@ -57,17 +57,17 @@ export default StyleSheet.create({
     textAlign: "center"
   },
   dot: {
-    width: 6,
-    height: 6,
+    width: 8,
+    height: 8,
     marginTop: 1,
-    borderRadius: 5,
+    borderRadius: 4,
     opacity: 0
   },
 
   // CALENDAR DOTS
   dotsContainer: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    // justifyContent: 'center'
   },
   visibleDot: {
     opacity: 1,
