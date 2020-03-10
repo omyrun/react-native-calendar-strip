@@ -384,7 +384,7 @@ class CalendarStrip extends Component {
 
     const datesForWeek = [...this.state.datesForWeek];
     
-    filteredDatesSelectedForWeek[datesForWeek.indexOf(selectedDate)] = true;
+    filteredDatesSelectedForWeek[datesForWeek.findIndex(date => date.isSame(selectedDate,'day'))] = true;
 
     return {
       datesSelectedForWeek: filteredDatesSelectedForWeek,
