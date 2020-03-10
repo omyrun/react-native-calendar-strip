@@ -4,6 +4,7 @@
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import moment from 'moment';
 import {polyfill} from 'react-lifecycles-compat';
 
 import { Text, View, LayoutAnimation, TouchableOpacity } from "react-native";
@@ -140,7 +141,7 @@ class CalendarDay extends Component {
         .filter(d => (d && d.color))
         .map((dot, index) => {
         return (
-          <View style={{ width: 12, height: 12, backgroundColor: '#393B47', borderRadius: 6, position: 'absolute', bottom: -12, left: 10, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: 12, height: 12, backgroundColor: '#393B47', borderRadius: 6, position: 'absolute', bottom: -12, left: 11.5, justifyContent: 'center', alignItems: 'center' }} key={index}>
             <View
               key={dot.key ? dot.key : index}
               style={[
@@ -160,6 +161,13 @@ class CalendarDay extends Component {
       </View>
     );
   }
+
+  isWeekend = (date) => {
+    const dayName = moment(date).format('dddd');
+    const weekEnds = ['Sunday', 'Saturday'];
+
+    return weekEnds.includes(dayName);
+  };
 
   render() {
     // Defaults for disabled state
@@ -215,6 +223,7 @@ class CalendarDay extends Component {
         dateNameStyle = [styles.dateName, this.props.highlightDateNameStyle];
         dateNumberStyle = [
           styles.dateNumber,
+          { color: '#26262F'},
           this.props.highlightDateNumberStyle
         ];
       }
@@ -242,7 +251,7 @@ class CalendarDay extends Component {
         >
           {this.props.showDayName && (
             <Text
-              style={[{ fontSize: 14 }, dateNameStyle]}
+              style={[{ fontSize: 14 }, dateNameStyle, this.isWeekend(this.props.date) && { color: '#8D8F97'}]}
               allowFontScaling={this.props.allowDayTextScaling}
             >
               {this.props.date.format("dd").slice(0,1).toUpperCase()}
@@ -252,8 +261,9 @@ class CalendarDay extends Component {
             <View>
               <Text
                 style={[
-                    { fontSize: this.state.dateNumberFontSize },
-                    dateNumberStyle
+                    { fontSize: this.state.dateNumberFontSize},
+                    dateNumberStyle,
+                    { color: this.state.selected ? '#26262F' : this.isWeekend(this.props.date) ? '#8D8F97' : '#fff' }
                 ]}
                 allowFontScaling={this.props.allowDayTextScaling}
               >
