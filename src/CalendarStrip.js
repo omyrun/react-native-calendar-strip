@@ -123,6 +123,8 @@ class CalendarStrip extends Component {
       }
     }
 
+    this._calendar;
+
     const startingDate = this.getInitialStartingDate();
     const selectedDate = this.setLocale(moment(this.props.selectedDate));
     const weekData = this.updateWeekData(startingDate, selectedDate);
@@ -392,12 +394,22 @@ class CalendarStrip extends Component {
   };
 
   //Handling press on date/selecting date
-  onDateSelected(selectedDate) {
+  onDateSelected(selectedDate, scrollToCurrentDate) {
     this.setState({
       selectedDate,
       ...this.updateWeekHandleDateSelected(this.state.startingDate, selectedDate),
     });
     this.props.onDateSelected && this.props.onDateSelected(selectedDate , false);
+
+    if(scrollToCurrentDate && this._calendar) {
+
+      const currentDateIndex = this.state.datesForWeek.findIndex(date => date.isSame(selectedDate, 'day'));
+
+      this._calendar.scrollToIndex({
+        index: currentDateIndex,
+        viewOffset: 60,
+      });
+    }
   }
 
   // Check whether date is allowed
@@ -612,15 +624,12 @@ class CalendarStrip extends Component {
             {this.props.showDate ? (
               <>
               <FlatList
-                ref={ref => () => {
-                  this._calendar = ref;
-                }}
+                ref={ref => this._calendar = ref}
                 shouldItemUpdate={(props,nextProps) => props.item !== nextProps.item}
                 bounces={false}
                 horizontal
                 pagingEnabled
-                initialScrollIndex={this.props.initialScrollIndex}
-                legacyImplementation
+                initialScrollIndex={datesForWeek.findIndex(date => date.isSame(this.state.selectedDate, 'day')) - 1}
                 showsHorizontalScrollIndicator={false}
                 // onMomentumScrollEnd={() => this.onSwipeRight()}
                 scrollEventThrottle={500}
