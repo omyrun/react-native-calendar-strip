@@ -61,13 +61,18 @@ export default StyleSheet.create({
     height: 8,
     marginTop: 1,
     borderRadius: 4,
-    opacity: 0
+    opacity: 0,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   // CALENDAR DOTS
   dotsContainer: {
     flexDirection: 'row',
-    // justifyContent: 'center'
+    position: 'relative',
+    justifyContent: 'center',
+    // alignItems: 'center',
   },
   visibleDot: {
     opacity: 1,
