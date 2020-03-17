@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import moment from 'moment';
 import {polyfill} from 'react-lifecycles-compat';
 
-import { Text, View, LayoutAnimation, TouchableOpacity } from "react-native";
+import { Text, View, LayoutAnimation, TouchableOpacity, Dimensions } from "react-native";
 import styles from "./Calendar.style.js";
 
 class CalendarDay extends Component {
@@ -117,12 +117,14 @@ class CalendarDay extends Component {
   }
 
   calcSizes(props) {
+    const dmWidth = Dimensions.get('window').width;
+
     return {
       containerSize: Math.round(props.size),
       containerPadding: Math.round(props.size / 5),
       containerBorderRadius: Math.round(props.size / 2),
       dateNameFontSize: Math.round(props.size / 5),
-      dateNumberFontSize: Math.round(props.size / 2.9)
+      dateNumberFontSize: Math.round(props.size / (dmWidth >= 375 ? 2.9 : 3.2))
     };
   }
 
@@ -135,13 +137,25 @@ class CalendarDay extends Component {
     const markedDatesStyle = this.props.markedDatesStyle || {};
     let validDots = <View style={[styles.dot]} />; // default empty view for no dots case
 
+    const dmWidth = Dimensions.get('window').width;
+
     if (marking.dots && Array.isArray(marking.dots) && marking.dots.length > 0) {
       // Filter out dots so that we we process only those items which have key and color property
       validDots = marking.dots
         .filter(d => (d && d.color))
         .map((dot, index) => {
         return (
-          <View style={{ width: 12, height: 12, backgroundColor: '#393B47', borderRadius: 6, position: 'absolute', bottom: -12, left: 11.5, justifyContent: 'center', alignItems: 'center' }} key={index}>
+          <View style={{
+              width: dmWidth >= 375 ? 11 : 10,
+              height: dmWidth >= 375 ? 11 : 10,
+              backgroundColor: '#393B47',
+              borderRadius: 6,
+              position: 'absolute',
+              bottom: dmWidth >= 375 ? -10 : -8,
+              margin: 'auto',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }} key={index}>
             <View
               key={dot.key ? dot.key : index}
               style={[
