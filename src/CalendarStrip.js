@@ -270,7 +270,7 @@ class CalendarStrip extends Component {
     }
 
     getInitialStartingDate() {
-        if (this.props.startingDate) {
+        if (typeof this.props.startingDate !== 'undefined' && this.props.startingDate) {
             return this.setLocale(moment(this.props.startingDate));
         } else {
             return this.setLocale(moment(this.props.selectedDate)).isoWeekday(1);
@@ -279,6 +279,8 @@ class CalendarStrip extends Component {
 
     //Set startingDate to the previous week
     getPreviousWeek() {
+        console.log('getPreviousWeek call');
+
         const previousWeekStartDate = this.state.startingDate
             .clone()
             .subtract(1, "w");
@@ -291,12 +293,15 @@ class CalendarStrip extends Component {
                 this.props.onWeekChanged(previousWeekStartDate.clone());
             }
         }
+        
         let weekData = this.updateWeekData(previousWeekStartDate);
         this.setState({ startingDate: previousWeekStartDate, ...weekData });
     }
 
     //Set startingDate to the next week
     getNextWeek() {
+        console.log('getNextWeek call');
+
         const nextWeekStartDate = this.state.startingDate.clone().add(1, "w");
         if (this.props.onWeekChanged) {
             if (this.props.useIsoWeekday) {
@@ -357,7 +362,6 @@ class CalendarStrip extends Component {
         const substractedDate = me.setLocale(moment(startingDate).subtract(28, 'days'))
 
         for (let i = 0; i < props.countItems; i++) {
-
             let date = me.setLocale(substractedDate.clone().add(i, "days"));
 
             datesForWeek.push(date);
@@ -479,11 +483,14 @@ class CalendarStrip extends Component {
         if (markedDates.length === 0) {
             return false
         }
-        const date = markedDates.find(item => moment(day).isSame(item.date, "day"))
+
+        var dayDate = new Date(day);
+        const date = markedDates.find(item => moment(dayDate).isSame(new Date(item.date), "day"))
+
         if (date && date.dots.length > 0) {
-            return date
+            return date;
         } else {
-            return false
+            return false;
         }
     }
 
