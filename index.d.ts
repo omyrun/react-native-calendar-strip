@@ -27,6 +27,8 @@ declare module "react-native-calendar-strip" {
     animUpdateType: any;
     animProperty: any;
     animSpringDamping: any;
+    borderWidth: number;
+    borderHighlightColor: string;
   }
 
   interface IDayComponentProps {
